@@ -80,14 +80,14 @@ while finished == False:
 	screen.blit(playerImage, (x,y))
 	if y >= tY and y <= tY + 30:
 		if x >= tX and x <= tX + 30:
-			screen.blit(textWin, (450,350))
+			screen.blit(textWin, (450 - textWin.get_width(),350 - textWin.get_height()))
 		elif x + 30 >= tX and x + 30 <= tX + 30:
-			screen.blit(textWin, (450,350))
+			screen.blit(textWin, (450 - textWin.get_width(),350 - textWin.get_height()))
 	elif y + 30 >= tY and y + 30 <= tY + 30:
 		if x >= tX and x <= tX + 30:
-			screen.blit(textWin, (450,350))
+			screen.blit(textWin, (450 - textWin.get_width(),350 - textWin.get_height()))
 		elif x + 30 >= tX and x + 30 <= tX + 30:
-			screen.blit(textWin, (450,350))
+			screen.blit(textWin, (450 - textWin.get_width(),350 - textWin.get_height()))
 #(the screen in which you want to display, color of the shape, the shape created)
 	#pygame.draw.rect(screen,color,rectOne)
 #refresh/update the display to show a rectangle
