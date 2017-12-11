@@ -81,8 +81,9 @@ frame = pygame.time.Clock()
 collisionTreasure = False
 collisionEnemy = False
 mRight = True
-
+names =""
 enemies = [(eX,eY,mRight)]
+enemyNames = {0:"Max", 1:"Jill", 2:"Greg", 3:"Dianne"}
 #while our game is not finished
 while finished == False:
 	for event in pygame.event.get():
@@ -131,9 +132,19 @@ while finished == False:
 	screen.blit(backGroundImage, (0,0))
 	screen.blit(tImage, (tX,tY) )
 	screen.blit(playerImage, (x,y))
+	eIndex = 0
+
 	for eX,eY,mRight in enemies:
 		screen.blit(eImage, (eX,eY))
 		collisionEnemy,x,y = checkCollision(x,y,eX,eY)
+		if collisionEnemy == True:
+			name = enemyNames[eIndex]
+			textLose = font.render("You were killed by "+name, True, (255,0,0))
+			screen.blit(textLose, (450 - textLose.get_width()/2,350 - textLose.get_height()/2))
+			pygame.display.flip()
+			frame.tick(1)
+		frame.tick(30)
+		eIndex += 1
 	collisionTreasure,x,y = checkCollision(x,y,tX,tY)
 	
 	if collisionTreasure == True:
