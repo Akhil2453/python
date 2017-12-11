@@ -66,7 +66,7 @@ screen.blit(tImage, (tX,tY) )
 #----------------------------------------------------------------------------------------
 #Adding text
 font = pygame.font.SysFont("comicsans", 60)
-textWin = font.render("Great Job!", True, (0,0,0))
+level = 1
 
 frame = pygame.time.Clock()
 collisionTreasure = False
@@ -105,6 +105,8 @@ while finished == False:
 	screen.blit(playerImage, (x,y))
 	collisionTreasure,x,y = checkCollision(x,y,tX,tY)
 	if collisionTreasure == True:
+		level += 1
+		textWin = font.render("You've reached level "+str(level), True, (0,0,0))
 		screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
 		pygame.display.flip()
 		frame.tick(1)
