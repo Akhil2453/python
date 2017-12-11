@@ -6,21 +6,21 @@ def checkCollision(x,y,tX,tY):
 	if y >= tY and y <= tY + 30:
 		if x >= tX and x <= tX + 30:
 			#Reset Player position
-			x = 800 - 30/2
+			x = 700 - 30/2
 			y = 650
 			collisionState = True
 		elif x + 30 >= tX and x + 30 <= tX + 30:
-			x = 800 - 30/2
+			x = 700 - 30/2
 			y = 650
 			collisionState = True
 	elif y + 30 >= tY and y + 30 <= tY + 30:
 		if x >= tX and x <= tX + 30:
-			x = 800 - 30/2
+			x = 700 - 30/2
 			y = 650
 			collisionState = True
 		elif x + 30 >= tX and x + 30 <= tX + 30:
 			screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
-			x = 800 - 30/2
+			x = 700 - 30/2
 			y = 650
 			collisionState = True
 	return collisionState, x, y
@@ -32,7 +32,7 @@ screen = pygame.display.set_mode((900,700))
 #--------------------------------------------------------------------------------------
 finished = False
 
-x = 800 - 30/2
+x = 700 - 30/2
 y = 650
 
 #to ceck the index value of the key pressed
@@ -59,8 +59,17 @@ tImage = pygame.image.load("treasure.png")
 tImage = pygame.transform.scale(tImage, (30,30))
 tImage = tImage.convert_alpha()
 
+#Adding enemy
+eImage = pygame.image.load("enemy.png")
+eImage = pygame.transform.scale(eImage, (30,30))
+eImage = eImage.convert_alpha()
+
 tX = 150 - 30/2
 tY = 100
+
+eX = 550 - 30/2
+eY = 275
+
 screen.blit(tImage, (tX,tY) )
 
 #----------------------------------------------------------------------------------------
@@ -70,6 +79,8 @@ level = 1
 
 frame = pygame.time.Clock()
 collisionTreasure = False
+
+mRight = True
 #while our game is not finished
 while finished == False:
 	for event in pygame.event.get():
@@ -81,6 +92,15 @@ while finished == False:
 #to get the keys pressed during the game, stored as arrays/listsss
 	pressedKeys = pygame.key.get_pressed()
 				#[....,Up,DOWN,LEFT,SPACE,.....]
+	if eX >= 870-30/2:
+		mRight = False
+	elif eX <= 590-30/2:
+		mRight = True
+	if mRight == True:
+		eX += 5
+	else:
+		eX -= 5
+
 	if pressedKeys[pygame.K_UP] == 1:
 		#y += 5     # to move up
 		y -= 5		# to move down
@@ -103,6 +123,7 @@ while finished == False:
 	screen.blit(backGroundImage, (0,0))
 	screen.blit(tImage, (tX,tY) )
 	screen.blit(playerImage, (x,y))
+	screen.blit(eImage, (eX,eY))
 	collisionTreasure,x,y = checkCollision(x,y,tX,tY)
 	if collisionTreasure == True:
 		level += 1
