@@ -114,7 +114,22 @@ while finished == False:
 		#	space key is pressed, and change the x,y coordinates for the 
 		#	player
 #---------------------------------------------------------------------------------------
-
+# Checking collision
+		#write this code after the last .blit inside the while loop
+		#if y >= tY and y <= tY + 30:
+		#	if x >= tX and x <= tX + 30:
+		#		.
+		#		.
+		#	elif x + 30 >= tX and x + 30 <= tX + 30:
+		#		.
+		#		.
+		#elif y + 30 >= tY and y + 30 <= tY + 30:
+		#	if x >= tX and x <= tX + 30:
+		#		.
+		#		.
+		#	elif x + 30 >= tX and x + 30 <= tX + 30:
+		#		.
+		#		.
 #---------------------------------------------------------------------------------------
 
 #---------------------------------------------------------------------------------------
