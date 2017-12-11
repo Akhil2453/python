@@ -6,21 +6,21 @@ def checkCollision(x,y,tX,tY):
 	if y >= tY and y <= tY + 30:
 		if x >= tX and x <= tX + 30:
 			#Reset Player position
-			x = 700 - 30/2
+			x = 450 - 30/2
 			y = 650
 			collisionState = True
 		elif x + 30 >= tX and x + 30 <= tX + 30:
-			x = 700 - 30/2
+			x = 450 - 30/2
 			y = 650
 			collisionState = True
 	elif y + 30 >= tY and y + 30 <= tY + 30:
 		if x >= tX and x <= tX + 30:
-			x = 700 - 30/2
+			x = 450 - 30/2
 			y = 650
 			collisionState = True
 		elif x + 30 >= tX and x + 30 <= tX + 30:
 			screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
-			x = 700 - 30/2
+			x = 450 - 30/2
 			y = 650
 			collisionState = True
 	return collisionState, x, y
@@ -32,7 +32,7 @@ screen = pygame.display.set_mode((900,700))
 #--------------------------------------------------------------------------------------
 finished = False
 
-x = 700 - 30/2
+x = 450 - 30/2
 y = 650
 
 #to ceck the index value of the key pressed
@@ -64,11 +64,11 @@ eImage = pygame.image.load("enemy.png")
 eImage = pygame.transform.scale(eImage, (30,30))
 eImage = eImage.convert_alpha()
 
-tX = 150 - 30/2
-tY = 100
+tX = 450 - 30/2
+tY = 75
 
-eX = 550 - 30/2
-eY = 275
+eX = 50 - 30/2
+eY = 590
 
 screen.blit(tImage, (tX,tY) )
 
@@ -79,8 +79,10 @@ level = 1
 
 frame = pygame.time.Clock()
 collisionTreasure = False
-
+collisionEnemy = False
 mRight = True
+
+enemies = [(eX,eY,mRight)]
 #while our game is not finished
 while finished == False:
 	for event in pygame.event.get():
@@ -92,14 +94,20 @@ while finished == False:
 #to get the keys pressed during the game, stored as arrays/listsss
 	pressedKeys = pygame.key.get_pressed()
 				#[....,Up,DOWN,LEFT,SPACE,.....]
-	if eX >= 870-30/2:
-		mRight = False
-	elif eX <= 590-30/2:
-		mRight = True
-	if mRight == True:
-		eX += 5
-	else:
-		eX -= 5
+	eIndex = 0
+	for eX,eY,mRight in enemies :
+		#position check
+		if eX >= 870-30/2:
+			mRight = False
+		elif eX <= 50-30/2:
+			mRight = True
+		if mRight == True:
+			eX += 5*level
+		else:
+			eX -= 5*level
+		enemies[eIndex]=(eX,eY,mRight)
+		eIndex += 1
+
 
 	if pressedKeys[pygame.K_UP] == 1:
 		#y += 5     # to move up
@@ -123,14 +131,20 @@ while finished == False:
 	screen.blit(backGroundImage, (0,0))
 	screen.blit(tImage, (tX,tY) )
 	screen.blit(playerImage, (x,y))
-	screen.blit(eImage, (eX,eY))
+	for eX,eY,mRight in enemies:
+		screen.blit(eImage, (eX,eY))
+		collisionEnemy,x,y = checkCollision(x,y,eX,eY)
 	collisionTreasure,x,y = checkCollision(x,y,tX,tY)
+	
 	if collisionTreasure == True:
 		level += 1
+		enemies.append((eX-50*level,eY-50*level,False))
 		textWin = font.render("You've reached level "+str(level), True, (0,0,0))
 		screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
 		pygame.display.flip()
 		frame.tick(1)
+	elif collisionEnemy == True:
+		level = 1
 #(the screen in which you want to display, color of the shape, the shape created)
 	#pygame.draw.rect(screen,color,rectOne)
 #refresh/update the display to show a rectangle
