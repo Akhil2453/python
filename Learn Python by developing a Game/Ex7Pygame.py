@@ -5,18 +5,16 @@ def checkCollision(x,y,tX,tY):
 	collisionState = False
 	if y >= tY and y <= tY + 30:
 		if x >= tX and x <= tX + 30:
-			screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
+			#Reset Player position
 			x = 800 - 30/2
 			y = 650
 			collisionState = True
 		elif x + 30 >= tX and x + 30 <= tX + 30:
-			screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
 			x = 800 - 30/2
 			y = 650
 			collisionState = True
 	elif y + 30 >= tY and y + 30 <= tY + 30:
 		if x >= tX and x <= tX + 30:
-			screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
 			x = 800 - 30/2
 			y = 650
 			collisionState = True
@@ -25,6 +23,7 @@ def checkCollision(x,y,tX,tY):
 			x = 800 - 30/2
 			y = 650
 			collisionState = True
+	return collisionState, x, y
 
 pygame.init()	#calling method init()
 
@@ -70,7 +69,7 @@ font = pygame.font.SysFont("comicsans", 60)
 textWin = font.render("Great Job!", True, (0,0,0))
 
 frame = pygame.time.Clock()
-
+collisionTreasure = False
 #while our game is not finished
 while finished == False:
 	for event in pygame.event.get():
@@ -104,7 +103,11 @@ while finished == False:
 	screen.blit(backGroundImage, (0,0))
 	screen.blit(tImage, (tX,tY) )
 	screen.blit(playerImage, (x,y))
-	
+	collisionTreasure,x,y = checkCollision(x,y,tX,tY)
+	if collisionTreasure == True:
+		screen.blit(textWin, (450 - textWin.get_width()/2,350 - textWin.get_height()/2))
+		pygame.display.flip()
+		frame.tick(1)
 #(the screen in which you want to display, color of the shape, the shape created)
 	#pygame.draw.rect(screen,color,rectOne)
 #refresh/update the display to show a rectangle
