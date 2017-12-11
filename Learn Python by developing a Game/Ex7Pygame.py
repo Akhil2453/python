@@ -23,6 +23,7 @@ playerImage = pygame.transform.scale(playerImage, (30,30))
 #playerImage = playerImage.convert()
 playerImage = playerImage.convert_alpha()
 
+#--------------------------------------------------------------------------------------
 #Adding Background image
 backGroundImage = pygame.image.load("images.jpeg")
 backGroundImage = pygame.transform.scale(backGroundImage, (900,700))
@@ -36,6 +37,11 @@ tImage = tImage.convert_alpha()
 tX = 150 - 30/2
 tY = 100
 screen.blit(tImage, (tX,tY) )
+
+#----------------------------------------------------------------------------------------
+#Adding text
+font = pygame.font.SysFont("comicsans", 60)
+textWin = font.render("Great Job!", True, (0,0,0))
 
 frame = pygame.time.Clock()
 
@@ -72,6 +78,16 @@ while finished == False:
 	screen.blit(backGroundImage, (0,0))
 	screen.blit(tImage, (tX,tY) )
 	screen.blit(playerImage, (x,y))
+	if y >= tY and y <= tY + 30:
+		if x >= tX and x <= tX + 30:
+			screen.blit(textWin, (450,350))
+		elif x + 30 >= tX and x + 30 <= tX + 30:
+			screen.blit(textWin, (450,350))
+	elif y + 30 >= tY and y + 30 <= tY + 30:
+		if x >= tX and x <= tX + 30:
+			screen.blit(textWin, (450,350))
+		elif x + 30 >= tX and x + 30 <= tX + 30:
+			screen.blit(textWin, (450,350))
 #(the screen in which you want to display, color of the shape, the shape created)
 	#pygame.draw.rect(screen,color,rectOne)
 #refresh/update the display to show a rectangle
